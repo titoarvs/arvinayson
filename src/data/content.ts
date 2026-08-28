@@ -153,9 +153,9 @@ export const experience = {
   },
   roles: [
     {
-      title: "Software Engineer Intern",
+      title: "Software Engineer",
       company: "Tito Solutions",
-      period: "July 2023 — Present",
+      period: "June 2025 — Present",
       location: "Remote",
       summary:
         "Building and refining web products across React, Supabase, and adjacent tooling — with a focus on UI quality, collaboration, and steady delivery.",

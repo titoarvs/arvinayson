@@ -1,0 +1,27 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  color: var(--color-text);
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    background var(--duration-press) var(--ease-out),
+    color var(--duration-press) var(--ease-out);
+}
+
+.toggle:hover {
+  background: var(--color-accent-soft-hover);
+}
+
+.toggle:active {
+  transform: scale(0.97);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+}

@@ -1,0 +1,209 @@
+.contact {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border-top: 1px solid var(--color-border);
+  background-color: #ffffff;
+  background-image: radial-gradient(
+    ellipse 70% 60% at 100% 0%,
+    color-mix(in srgb, var(--color-accent) 12%, transparent),
+    transparent 55%
+  );
+  color: var(--color-text);
+  transition:
+    background-color var(--duration-theme) var(--ease-out),
+    border-color var(--duration-theme) var(--ease-out);
+}
+
+:global([data-theme="dark"]) .contact {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(
+    ellipse 70% 60% at 100% 0%,
+    color-mix(in srgb, var(--color-accent) 14%, transparent),
+    transparent 55%
+  );
+}
+
+.contact :global(.section__inner) {
+  position: relative;
+  z-index: 1;
+}
+
+.contact :global(.section__label) {
+  color: var(--color-accent);
+}
+
+.contact :global(.section__title) {
+  color: var(--color-text);
+}
+
+.contact :global(.section__title-accent) {
+  color: var(--color-text);
+}
+
+.intro {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  max-width: 12ch;
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  margin-bottom: var(--space-4);
+}
+
+.body {
+  max-width: 32rem;
+  font-size: 1.05rem;
+  font-weight: var(--weight-regular);
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 100%;
+  padding: 1.15rem 1.2rem 1.2rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-solid);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  color: var(--color-text);
+  overflow: hidden;
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    background-color var(--duration-theme) var(--ease-out);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -45% auto;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 18%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  box-shadow: var(--shadow-tag);
+  color: var(--color-text);
+}
+
+.card:hover .arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+.card:active {
+  transform: scale(0.985);
+}
+
+.cardTop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: 0.7rem;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.cardLabel {
+  flex: 1;
+  font-size: 0.7rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.arrow {
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.55;
+  transition:
+    transform 160ms var(--ease-out),
+    opacity 160ms var(--ease-out);
+}
+
+.cardValue {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  font-size: 1.05rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.cardHint {
+  position: relative;
+  z-index: 1;
+  font-size: 0.78rem;
+  font-weight: var(--weight-regular);
+  line-height: 1.35;
+  color: var(--color-muted);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    min-height: 10.5rem;
+    padding: 1.25rem 1.3rem 1.3rem;
+  }
+
+  .cardValue {
+    font-size: 1.08rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:active,
+  .card:hover .arrow {
+    transform: none;
+  }
+}

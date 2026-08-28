@@ -1,11 +1,13 @@
 import { experience } from "../data/content"
+import { Particles } from "./Particles"
 import { Reveal } from "./Reveal"
 import styles from "./Experience.module.css"
 
 export function Experience() {
   return (
     <section id="experience" className={`section ${styles.experience}`}>
-      <div className="section__inner">
+      <Particles density={38} />
+      <div className={`section__inner ${styles.inner}`}>
         <Reveal>
           <span className="section__label">{experience.label}</span>
           <h2 className={`section__title ${styles.title}`}>

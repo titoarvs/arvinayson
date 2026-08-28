@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { GitHubCalendar } from "react-github-calendar"
 import { github } from "../data/content"
 import { useTheme } from "../theme/ThemeProvider"
+import { Particles } from "./Particles"
 import { Reveal } from "./Reveal"
 import styles from "./Github.module.css"
 
@@ -44,6 +45,7 @@ export function Github() {
 
   return (
     <section id="github" className={`section ${styles.github}`}>
+      <Particles density={32} />
       <div className={`section__inner ${styles.inner}`}>
         <Reveal>
           <div className={styles.bar}>

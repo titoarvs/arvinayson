@@ -1,4 +1,5 @@
 import { contact } from "../data/content"
+import { Particles } from "./Particles"
 import { Reveal } from "./Reveal"
 import styles from "./Contact.module.css"
 
@@ -34,6 +35,7 @@ type Channel = keyof typeof icons
 export function Contact() {
   return (
     <section id="contact" className={`section ${styles.contact}`}>
+      <Particles density={40} />
       <div className="section__inner">
         <Reveal>
           <div className={styles.intro}>

@@ -1,9 +1,13 @@
 .github {
-  border-top: 1px solid var(--color-border);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
   padding-block: var(--space-7) !important;
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
 }

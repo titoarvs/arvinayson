@@ -1,8 +1,7 @@
 .skills {
   position: relative;
+  isolation: isolate;
   overflow: clip;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
   background: transparent;
   padding-block: var(--space-7) !important;
 }

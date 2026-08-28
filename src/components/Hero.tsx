@@ -6,6 +6,7 @@ import {
   useReducedMotion,
 } from "motion/react"
 import { hero } from "../data/content"
+import { Particles } from "./Particles"
 import styles from "./Hero.module.css"
 
 const spring = { type: "spring" as const, bounce: 0, duration: 0.4 }
@@ -56,6 +57,7 @@ export function Hero() {
 
   return (
     <section id="top" ref={ref} className={styles.hero} aria-label="Introduction">
+      <Particles density={48} />
       <motion.div className={styles.glow} style={{ y: glowY }} aria-hidden="true" />
 
       <div className={styles.shell}>

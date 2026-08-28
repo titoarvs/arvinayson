@@ -3,6 +3,7 @@ import { Reorder, useReducedMotion } from "motion/react"
 import { skillGroups } from "../data/content"
 import type { StackId } from "./StackIcon"
 import { getStackHex, StackIcon } from "./StackIcon"
+import { Particles } from "./Particles"
 import { Reveal } from "./Reveal"
 import styles from "./Skills.module.css"
 
@@ -54,6 +55,7 @@ export function Skills() {
 
   return (
     <section id="skills" className={`section ${styles.skills}`}>
+      <Particles density={40} />
       <div className={`section__inner ${styles.inner}`}>
         <Reveal>
           <div className={styles.heading}>

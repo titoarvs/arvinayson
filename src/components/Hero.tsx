@@ -1,26 +1,19 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   motion,
   useScroll,
   useTransform,
   useReducedMotion,
 } from "motion/react"
-import { hero, skillGroups } from "../data/content"
-import { getStackHex, StackIcon, type StackId } from "./StackIcon"
+import { hero } from "../data/content"
 import styles from "./Hero.module.css"
 
 const spring = { type: "spring" as const, bounce: 0, duration: 0.4 }
-const carouselSpring = { type: "spring" as const, bounce: 0.18, duration: 0.55 }
-const SWITCH_MS = 3000
-const VISIBLE = 2
+const carouselSpring = { type: "spring" as const, bounce: 0.14, duration: 0.55 }
+const SWITCH_MS = 4000
+const VISIBLE = 1
 
-const stack = skillGroups.groups.flatMap((group) =>
-  group.items.map((item) => ({
-    id: item.id as StackId,
-    label: item.label,
-    group: group.title,
-  })),
-)
+const projects = hero.projects
 
 function relativeOffset(index: number, active: number, total: number) {
   let diff = index - active
@@ -34,7 +27,8 @@ export function Hero() {
   const reduced = useReducedMotion()
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
-  const total = stack.length
+  const [failed, setFailed] = useState<Record<string, boolean>>({})
+  const total = projects.length
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -43,10 +37,9 @@ export function Hero() {
 
   const collageY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 48])
   const glowY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -30])
-  const marqueeItems = [...hero.trusted, ...hero.trusted]
 
   useEffect(() => {
-    if (reduced || paused) return
+    if (reduced || paused || total < 2) return
 
     const id = window.setInterval(() => {
       setActive((value) => (value + 1) % total)
@@ -120,60 +113,87 @@ export function Hero() {
             onPointerEnter={() => setPaused(true)}
             onPointerLeave={() => setPaused(false)}
             aria-roledescription="carousel"
-            aria-label="Tech stack"
+            aria-label="Selected websites"
           >
             <div className={styles.stage}>
-              {stack.map((item, index) => {
+              {projects.map((project, index) => {
                 const offset = relativeOffset(index, active, total)
                 const abs = Math.abs(offset)
                 const visible = abs <= VISIBLE
                 const isActive = offset === 0
-                const accent = getStackHex(item.id)
+                const broken = failed[project.id]
 
                 return (
-                  <motion.button
-                    key={item.id}
-                    type="button"
-                    className={styles.mark}
-                    style={{ "--mark-accent": accent } as CSSProperties}
-                    aria-label={item.label}
+                  <motion.a
+                    key={project.id}
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.preview}
+                    aria-label={`${project.title} — open site`}
                     aria-current={isActive ? "true" : undefined}
                     tabIndex={isActive ? 0 : -1}
                     initial={false}
                     animate={{
-                      x: `${offset * 62}%`,
-                      scale: isActive ? 1 : Math.max(0.45, 0.78 - abs * 0.14),
-                      opacity: visible ? (isActive ? 1 : 0.45 - abs * 0.08) : 0,
+                      x: `${offset * 72}%`,
+                      scale: isActive ? 1 : Math.max(0.72, 0.88 - abs * 0.1),
+                      opacity: visible ? (isActive ? 1 : 0.35) : 0,
                       zIndex: VISIBLE + 1 - abs,
-                      filter: isActive ? "blur(0px)" : `blur(${Math.min(abs, 2)}px)`,
+                      filter: isActive ? "blur(0px)" : `blur(${4 + abs * 4}px)`,
                     }}
                     transition={reduced ? { duration: 0.2 } : carouselSpring}
-                    onClick={() => setActive(index)}
+                    onFocus={() => setActive(index)}
+                    onClick={(event) => {
+                      if (!isActive) {
+                        event.preventDefault()
+                        setActive(index)
+                      }
+                    }}
                   >
-                    <span className={styles.logoWrap} data-active={isActive || undefined}>
-                      <StackIcon
-                        id={item.id}
-                        className={styles.logo}
-                        title={item.label}
-                        branded
-                      />
+                    <span className={styles.browser}>
+                      <span className={styles.browserBar} aria-hidden="true">
+                        <span className={styles.dotRed} />
+                        <span className={styles.dotAmber} />
+                        <span className={styles.dotGreen} />
+                        <span className={styles.browserUrl}>{project.url.replace(/^https?:\/\//, "")}</span>
+                      </span>
+                      <span className={styles.shot}>
+                        {broken ? (
+                          <span className={styles.shotFallback}>
+                            <span className={styles.shotInitial}>
+                              {project.title.charAt(0)}
+                            </span>
+                            <span>Preview unavailable</span>
+                          </span>
+                        ) : (
+                          <img
+                            src={project.image}
+                            alt=""
+                            loading={index === 0 ? "eager" : "lazy"}
+                            decoding="async"
+                            onError={() =>
+                              setFailed((prev) => ({ ...prev, [project.id]: true }))
+                            }
+                          />
+                        )}
+                      </span>
                     </span>
-                    <span className={styles.tag} data-active={isActive || undefined}>
-                      <span className={styles.tagGroup}>{item.group}</span>
-                      {item.label}
+                    <span className={styles.previewMeta} data-active={isActive || undefined}>
+                      <span className={styles.previewTitle}>{project.title}</span>
+                      <span className={styles.previewStack}>{project.stack}</span>
                     </span>
-                  </motion.button>
+                  </motion.a>
                 )
               })}
             </div>
 
-            <div className={styles.dots} role="tablist" aria-label="Stack items">
-              {stack.map((item, index) => (
+            <div className={styles.dots} role="tablist" aria-label="Website previews">
+              {projects.map((project, index) => (
                 <button
-                  key={item.id}
+                  key={project.id}
                   type="button"
                   className={styles.dot}
-                  aria-label={item.label}
+                  aria-label={project.title}
                   aria-selected={index === active}
                   data-active={index === active || undefined}
                   onClick={() => setActive(index)}
@@ -182,32 +202,6 @@ export function Hero() {
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          className={styles.trusted}
-          initial={reduced ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...spring, delay: 0.22 }}
-        >
-          <div className={styles.trustedBar}>
-            <div
-              className={`${styles.marqueeTrack} ${reduced ? styles.marqueeStatic : ""}`}
-              aria-hidden={reduced ? undefined : true}
-            >
-              {(reduced ? hero.trusted : marqueeItems).map((item, i) => (
-                <span key={`${item.id}-${i}`} className={styles.trustedItem}>
-                  <StackIcon
-                    id={item.id}
-                    className={styles.trustedLogo}
-                    title={item.label}
-                    branded
-                  />
-                  <span className={styles.trustedName}>{item.label}</span>
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

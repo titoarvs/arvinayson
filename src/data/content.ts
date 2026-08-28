@@ -57,6 +57,36 @@ export const hero = {
     { id: "postgresql" as const, label: "PostgreSQL" },
     { id: "laravel" as const, label: "Laravel" },
   ],
+  projects: [
+    {
+      id: "tito-hris",
+      title: "TitoHRIS",
+      url: "https://tito-hris-workspace.vercel.app/",
+      stack: "React · HR workspace",
+      image: "/previews/tito-hris.jpg",
+    },
+    {
+      id: "travox",
+      title: "Travox",
+      url: "https://travox-app.vercel.app/",
+      stack: "React · Travel",
+      image: "/previews/travox.jpg",
+    },
+    {
+      id: "idea-board",
+      title: "Collaborative Idea Board",
+      url: "https://collaborative-idea-board-web.vercel.app",
+      stack: "React · TypeScript",
+      image: "/previews/idea-board.jpg",
+    },
+    {
+      id: "chat",
+      title: "Chat Web",
+      url: "https://chat-web-chi-one.vercel.app",
+      stack: "React · Realtime",
+      image: "/previews/chat.jpg",
+    },
+  ],
 }
 
 export const about = {

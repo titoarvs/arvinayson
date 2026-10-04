@@ -12,6 +12,7 @@ export const site = {
 
 export const navLinks = [
   { href: "#about", label: "About" },
+  { href: "#work", label: "Work" },
   { href: "#skills", label: "Skills" },
   { href: "#github", label: "GitHub" },
   { href: "#experience", label: "Experience" },
@@ -59,11 +60,14 @@ export const hero = {
   ],
   projects: [
     {
-      id: "tito-hris",
-      title: "TitoHRIS",
-      url: "https://tito-hris-workspace.vercel.app/",
-      stack: "React · HR workspace",
-      image: "/previews/tito-hris.jpg",
+      id: "virtual-office",
+      title: "Virtual Office",
+      url: "https://virtual-office-puce.vercel.app/?room=lobby",
+      stack: "React · Multiplayer",
+      image: "/previews/virtual-office.jpg",
+      summary:
+        "A shared isometric lobby. People walk in, sit around the plaza, and talk in the same room.",
+      cta: "Open the lobby",
     },
     {
       id: "travox",
@@ -71,6 +75,8 @@ export const hero = {
       url: "https://travox-app.vercel.app/",
       stack: "React · Travel",
       image: "/previews/travox.jpg",
+      summary: "Tours, hotels, and trip search in one storefront.",
+      cta: "Visit Travox",
     },
     {
       id: "idea-board",
@@ -78,6 +84,8 @@ export const hero = {
       url: "https://collaborative-idea-board-web.vercel.app",
       stack: "React · TypeScript",
       image: "/previews/idea-board.jpg",
+      summary: "A board for dropping ideas together.",
+      cta: "Open the board",
     },
     {
       id: "chat",
@@ -85,6 +93,8 @@ export const hero = {
       url: "https://chat-web-chi-one.vercel.app",
       stack: "React · Realtime",
       image: "/previews/chat.jpg",
+      summary: "A small realtime chat you can open and use.",
+      cta: "Open chat",
     },
   ],
 }
